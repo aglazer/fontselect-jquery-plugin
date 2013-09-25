@@ -522,13 +522,15 @@
 
             Fontselect.prototype.setupHtml = function () {
                 this.$original.empty().hide();
-                this.$element = $('<div>', {'class': this.options.style});
-                this.$arrow = $('<div><b></b></div>');
-                this.$select = $('<a><span>' + this.options.placeholder + '</span></a>');
-                this.$drop = $('<div>', {'class': 'fs-drop'});
-                this.$results = $('<ul>', {'class': 'fs-results'});
-                this.$original.after(this.$element.append(this.$select.append(this.$arrow)).append(this.$drop));
-                this.$drop.append(this.$results.append(this.fontsAsHtml())).hide();
+                if (!this.$original.context.nextSibling){
+                    this.$element = $('<div>', {'class': this.options.style});
+                    this.$arrow = $('<div><b></b></div>');
+                    this.$select = $('<a><span>' + this.options.placeholder + '</span></a>');
+                    this.$drop = $('<div>', {'class': 'fs-drop'});
+                    this.$results = $('<ul>', {'class': 'fs-results'});
+                    this.$original.after(this.$element.append(this.$select.append(this.$arrow)).append(this.$drop));
+                    this.$drop.append(this.$results.append(this.fontsAsHtml())).hide();
+                }
             };
 
             Fontselect.prototype.fontsAsHtml = function () {
