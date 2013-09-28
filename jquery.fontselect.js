@@ -446,7 +446,11 @@
 
         var Fontselect = (function () {
 
+
             function Fontselect(original, o) {
+                if(original.nextElementSibling && original.nextElementSibling.className === "font-select") {
+                    $(original).next().remove();
+                }
                 this.$original = $(original);
                 this.options = o;
                 this.active = false;
@@ -460,6 +464,8 @@
                     this.addFontLink(font);
                 }
             }
+
+
 
             Fontselect.prototype.bindEvents = function () {
                 $('li', this.$results)
@@ -522,15 +528,13 @@
 
             Fontselect.prototype.setupHtml = function () {
                 this.$original.empty().hide();
-                if (!this.$original.context.nextSibling){
-                    this.$element = $('<div>', {'class': this.options.style});
-                    this.$arrow = $('<div><b></b></div>');
-                    this.$select = $('<a><span>' + this.options.placeholder + '</span></a>');
-                    this.$drop = $('<div>', {'class': 'fs-drop'});
-                    this.$results = $('<ul>', {'class': 'fs-results'});
-                    this.$original.after(this.$element.append(this.$select.append(this.$arrow)).append(this.$drop));
-                    this.$drop.append(this.$results.append(this.fontsAsHtml())).hide();
-                }
+                this.$element = $('<div>', {'class': this.options.style});
+                this.$arrow = $('<div><b></b></div>');
+                this.$select = $('<a><span>' + this.options.placeholder + '</span></a>');
+                this.$drop = $('<div>', {'class': 'fs-drop'});
+                this.$results = $('<ul>', {'class': 'fs-results'});
+                this.$original.after(this.$element.append(this.$select.append(this.$arrow)).append(this.$drop));
+                this.$drop.append(this.$results.append(this.fontsAsHtml())).hide();
             };
 
             Fontselect.prototype.fontsAsHtml = function () {
